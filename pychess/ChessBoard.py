@@ -20,7 +20,7 @@ class Direction(Enum):
     EV = 9
 
 
-class Board:
+class ChessBoard:
 
     def __init__(self):
         """
