@@ -6,6 +6,8 @@ from pychess.Queen import Queen
 from pychess.King import King
 from pychess.Piece import *
 
+## TODO create a persistence schema for loading a predefined config
+## TODO use persistence for loading initial config
 
 class Direction(Enum):
     N = 0
@@ -27,17 +29,17 @@ class ChessBoard:
 
         :return:
         """
-        self.reset_board()
+        self._reset_board()
 
-    def reset_board(self):
+    def _reset_board(self):
         """
+        Brings the board to the initial state, with all pieces at starting positions.
+        """
+        rows, columns = range(1, 9), "ABCDEFGH"
+        self._board = [{col: None for col in columns} for _ in rows]
 
-        :return:
-        """
-        self.board = {}
         for column in Col:
             for row in range(1, 8):
-                location_dict = {"col" : column, "row" : row}
                 if row in (2, 7):
                     self.board[column][row] = Pawn(Color.white if row == 2 else Color.black, location_dict, True)
                 elif row in (1, 8):
@@ -52,7 +54,14 @@ class ChessBoard:
                     else:
                         self.board[column][row] = King(Color.white if row == 1 else Color.black, location_dict, True)
 
+    def _set_piece(self, piece, row, column):
+
     def is_empty_location(self, location):
+        """
+
+        :param location:
+        :return:
+        """
         if self.board[location["col"]][location["row"]] != None:
             return False
         return True
