@@ -37,7 +37,7 @@ class ChessBoard:
         """
         rows, columns = range(1, 9), "ABCDEFGH"
         self._board = [{col: None for col in columns} for _ in rows]
-
+        """
         for column in Col:
             for row in range(1, 8):
                 if row in (2, 7):
@@ -55,7 +55,7 @@ class ChessBoard:
                         self.board[column][row] = King(Color.white if row == 1 else Color.black, location_dict, True)
 
     def _set_piece(self, piece, row, column):
-
+"""
     def is_empty_location(self, location):
         """
 
