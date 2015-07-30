@@ -2,9 +2,8 @@ from pychess.Piece import *
 
 
 class King(Piece):
-
-    def __init__(self, piece_color, piece_location, piece_on_board):
-        super().__init__(piece_color, piece_location, piece_on_board)
+    def __init__(self, piece_color, piece_location):
+        super().__init__(piece_color, piece_location)
 
     def move(self, new_location):
         if self.is_valid_move(new_location):

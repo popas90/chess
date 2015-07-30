@@ -30,31 +30,31 @@ class Piece:
     """
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, color, location, board):
+    def __init__(self, piece_color, piece_location):
         """
         Constructor for setting all general piece properties.
         :param color: the piece's color (white or black)
         :param location: dictionary representing the piece's position on the board
-        :param board: reference to the current board
         :return: the new Piece object
         """
-        self.location = location
-        self.board = board
-        self.color = color
-        self.col_index = 0
-        self.row_index = 1
+        self.location = piece_location
+        self.color = piece_color
 
     @property
     def location(self):
-        return self.location
+        return self._location
 
     @location.setter
     def location(self, value):
-        self.location = value
+        self._location = value
 
     @property
-    def on_board(self):
-        return self.board
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        self._color = value
 
     @abc.abstractmethod
     def move(self, new_location):
