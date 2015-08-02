@@ -2,6 +2,7 @@
   <dictionary name="popas">
     <words>
       <w>ABCDEFGH</w>
+      <w>abcdefgh</w>
     </words>
   </dictionary>
 </component>
