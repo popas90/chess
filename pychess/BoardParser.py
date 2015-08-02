@@ -8,24 +8,24 @@ from pychess.King import King
 
 
 class BoardParser:
+    def read_board_from_file(self, file_path):
+        rows, columns = range(1, 10), "ABCDEFGH"
+        board = [{col: None for col in columns} for _ in rows]
 
-    def parse_board(self, file_path):
-        """
-        Parses the file to retrieve a board configuration.
-        :param file_path: path to file
-        :return: the board configuration read from the file
-        """
-        board_config = self.read_board_from_file(file_path)
+        try:
+            with open(file_path, "r") as file:
+                row_iter = iter(rows)
+                for line in file:
+                    column_iter = iter(columns)
+                    row = next(row_iter)
+                    symbols = line.split(" ")
+                    for sym in symbols:
+                        col = next(column_iter)
+                        board[row][col] = self._get_piece_from_symbol(sym.rstrip(), row, col)
+        except ParsingError as err:
+            print("An error occurred while parsing the board from file : {0}".format(err))
 
-        if not self._verify_board_from_file(file_path):
-            return False, None
-        ## TODO load the file to memory, check for compliance, then send new structure to board creation
-
-        return True, board
-
-    @staticmethod
-    def _verify_board_from_file(file_path):
-        pass
+        return board
 
     @staticmethod
     def _get_piece_from_symbol(sym, row, col):
@@ -36,8 +36,13 @@ class BoardParser:
         :param col: column location
         :return: a new Piece object or None
         """
+        if len(sym) != 2:
+            raise ParsingError("Parsing error: Symbols should contain two characters only: {0}:{1}"
+                               .format(sym, len(sym)))
+
         color = Color.white if sym[1].capitalize() == "W" else Color.black
         piece = sym[0].capitalize()
+
         if piece == "K":
             return King(color, (row, col))
         elif piece == "Q":
@@ -50,20 +55,16 @@ class BoardParser:
             return Knight(color, (row, col), True)
         elif piece == "P":
             return Pawn(color, (row, col), True)
-        else:
+        elif piece == "0":
             return None
+        else:
+            raise ParsingError("Parsing error: Unrecognized piece")
 
-    def read_board_from_file(self, file_path):
-        rows, columns = range(1, 10), "ABCDEFGH"
-        board = [{col: None for col in columns} for _ in rows]
 
-        with open(file_path, "r") as file:
-            row_iter = iter(rows)
-            for line in file:
-                column_iter = iter(columns)
-                row = next(row_iter)
-                symbols = line.split(" ")
-                for sym in symbols:
-                    col = next(column_iter)
-                    board[row][col] = self._get_piece_from_symbol(sym, row, col)
-        return board
+class ParsingError(Exception):
+    """
+    Defines a ParsingError type of exception.
+    """
+
+    def __init__(self, message):
+        super(ParsingError, self).__init__(message)
