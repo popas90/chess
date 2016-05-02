@@ -6,22 +6,19 @@ class Color(Enum):
     """
     Enumeration for available colors.
     """
-    white = 0
-    black = 1
+    White = 0
+    Black = 1
 
 
-class Col(Enum):
-    """
-    Enumeration for board columns coding.
-    """
-    A = 1
-    B = 2
-    C = 3
-    D = 4
-    E = 5
-    F = 6
-    G = 7
-    H = 8
+class Direction(Enum):
+    Forward = 0
+    Back = 1
+    Left = 2
+    Right = 3
+
+
+class InvalidMoveException(Exception):
+    pass
 
 
 class Piece:
@@ -34,11 +31,12 @@ class Piece:
         """
         Constructor for setting all general piece properties.
         :param color: the piece's color (white or black)
-        :param location: dictionary representing the piece's position on the board
+        :param location: dictionary representing the piece's position
         :return: the new Piece object
         """
         self.location = piece_location
         self.color = piece_color
+        self.moves = []
 
     @property
     def location(self):
@@ -61,9 +59,9 @@ class Piece:
         return
 
     @abc.abstractmethod
-    def is_valid_move(self, new_location):
+    def is_legal_move(self, new_location):
         return
 
     @abc.abstractmethod
-    def get_all_valid_moves(self):
+    def get_all_legal_moves(self):
         return

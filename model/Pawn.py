@@ -1,17 +1,15 @@
-from pychess.Piece import *
+from .Piece import Piece
+from .Piece import Color
 
 
 class Pawn(Piece):
 
-    def __init__(self, piece_color, piece_location, piece_on_board):
-        """
-
-        :param piece_color:
-        :param piece_location:
-        :param piece_on_board:
-        :return: the new Pawn object
-        """
-        super().__init__(piece_color, piece_location, piece_on_board)
+    def __init__(self, piece_color, piece_location):
+        super().__init__(piece_color, piece_location)
+        self.moves = [('F'),
+                      ('FF'),
+                      ('FR', 'capture'),
+                      ('FL', 'capture')]
 
     def move(self, new_location):
         """
@@ -19,7 +17,7 @@ class Pawn(Piece):
         :param new_location: tuple specifying column and row.
         :return: True if piece was moved.
         """
-        if self.is_valid_move(new_location):
+        if self.is_legal_move(new_location):
             self.location = new_location
 
     def is_valid_move(self, new_location):
@@ -40,4 +38,3 @@ class Pawn(Piece):
 
         :return:
         """
-
