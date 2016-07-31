@@ -17,10 +17,6 @@ class Direction(Enum):
     Right = 3
 
 
-class InvalidMoveException(Exception):
-    pass
-
-
 class Piece:
     """
     Abstract class for a chess piece.

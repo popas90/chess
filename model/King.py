@@ -1,4 +1,4 @@
-from model import Piece
+from model.Piece import Piece
 
 
 class King(Piece):

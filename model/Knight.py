@@ -1,10 +1,10 @@
-from model import Piece
+from model.Piece import Piece
 
 
 class Knight(Piece):
 
-    def __init__(self, piece_color, piece_location, piece_on_board):
-        super().__init__(piece_color, piece_location, piece_on_board)
+    def __init__(self, piece_color, piece_location):
+        super().__init__(piece_color, piece_location)
         self.moves = [('FFR'),
                       ('FFL'),
                       ('RRF'),
