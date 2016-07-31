@@ -38,4 +38,4 @@ class TextPresenter:
 
     def move(self, location, new_location):
         self.validate_move(location, new_location)
-        self._board.get_piece_from_location
+        self._board.get_piece_from_location()
