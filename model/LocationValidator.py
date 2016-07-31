@@ -12,12 +12,17 @@ def validate_location_string(location_string):
     a valid chess board location.
     :param location: string representing a board location
     """
+    if not is_valid_location_string(location_string):
+        raise InvalidLocationException()
+
+
+def is_valid_location_string(location_string):
     if len(location_string) != 2:
-        raise InvalidLocationException(location_string)
+        return False
     column = location_string[0].lower()
     row = location_string[1]
     if column not in COLUMNS:
-        raise InvalidLocationException(location_string)
+        return False
     if row not in ROWS:
-        raise InvalidLocationException(location_string)
+        return False
     return True

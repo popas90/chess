@@ -1,5 +1,5 @@
-from TextPresenter import TextPresenter
+from model.Piece import Color
+from model.Pawn import Pawn
+from model.MovesGenerator import generate_all_moves
 
-pres = TextPresenter()
-pres.print_board()
-pres.move_piece("e2", "e8")
+generate_all_moves(Pawn(Color.White), 'd2')

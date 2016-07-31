@@ -16,6 +16,8 @@ class InvalidMoveException(Exception):
 class EmptyLocationException(Exception):
     pass
 
+# TODO both this and MovesGenerator should be singletons
+
 
 class Board:
 
@@ -31,27 +33,27 @@ class Board:
         return self._state[location]
 
     def _populate_with_default(self):
-        self._state['a1'] = Rook(Color.White, 'a1')
-        self._state['b1'] = Knight(Color.White, 'b1')
-        self._state['c1'] = Bishop(Color.White, 'c1')
-        self._state['d1'] = Queen(Color.White, 'd1')
-        self._state['e1'] = King(Color.White, 'e1')
-        self._state['f1'] = Bishop(Color.White, 'f1')
-        self._state['g1'] = Knight(Color.White, 'g1')
-        self._state['h1'] = Rook(Color.White, 'h1')
+        self._state['a1'] = Rook(Color.White)
+        self._state['b1'] = Knight(Color.White)
+        self._state['c1'] = Bishop(Color.White)
+        self._state['d1'] = Queen(Color.White)
+        self._state['e1'] = King(Color.White)
+        self._state['f1'] = Bishop(Color.White)
+        self._state['g1'] = Knight(Color.White)
+        self._state['h1'] = Rook(Color.White)
 
-        self._state['a8'] = Rook(Color.Black, 'a8')
-        self._state['b8'] = Knight(Color.Black, 'b8')
-        self._state['c8'] = Bishop(Color.Black, 'c8')
-        self._state['d8'] = Queen(Color.Black, 'd8')
-        self._state['e8'] = King(Color.Black, 'e8')
-        self._state['f8'] = Bishop(Color.Black, 'f8')
-        self._state['g8'] = Knight(Color.Black, 'g8')
-        self._state['h8'] = Rook(Color.Black, 'h8')
+        self._state['a8'] = Rook(Color.Black)
+        self._state['b8'] = Knight(Color.Black)
+        self._state['c8'] = Bishop(Color.Black)
+        self._state['d8'] = Queen(Color.Black)
+        self._state['e8'] = King(Color.Black)
+        self._state['f8'] = Bishop(Color.Black)
+        self._state['g8'] = Knight(Color.Black)
+        self._state['h8'] = Rook(Color.Black)
 
         for col in COLUMNS:
-            self._state[col + '2'] = Pawn(Color.White, col + '2')
-            self._state[col + '7'] = Pawn(Color.Black, col + '7')
+            self._state[col + '2'] = Pawn(Color.White)
+            self._state[col + '7'] = Pawn(Color.Black)
 
     def is_location_empty(self, location):
         validate_location_string(location)
@@ -63,3 +65,9 @@ class Board:
         validate_location_string(new_location)
         if self[location] is None:
             raise EmptyLocationException
+        if self[location].is_legal_move(location, new_location):
+            self._execute_move(location, new_location)
+
+    def _execute_move(self, location, new_location):
+        self._state[new_location] = self._state[location]
+        self._state[location] = None
